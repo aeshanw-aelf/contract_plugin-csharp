@@ -51,6 +51,12 @@ public class CSharpContainer
         return "";
     }
 
+    private string GenerateDocCommentBody(SourceCodeInfo sourceCodeInfo)
+    {
+        // request.ProtoFile[0].SourceCodeInfo.Location[0] this object can be extracted from CodeGeneratorRequest
+        return "";
+    }
+
     public string Generate(ServiceDescriptor serviceDescriptor,uint flags)
     {
         /*

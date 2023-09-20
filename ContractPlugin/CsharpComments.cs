@@ -4,9 +4,10 @@ namespace contract_plugin_csharp;
 
 public class CsharpComments
 {
-    public static string Generate(FileDescriptor fileDescriptor,bool leading)
+    public static string Generate(FileDescriptorProto fileDescriptor,bool leading)
     {
-        //TODO Implementation here based on --> link
+        //can extract SourceLocation info from fileDescriptor.SourceCodeInfo.Location[0]
+        //TODO Implementation
         return "";
     }
 }

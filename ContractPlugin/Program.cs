@@ -42,52 +42,53 @@ private static void Main(string[] args)
         using (var stdin = Console.OpenStandardInput())
         {
             stream = stdin;
-            request = Deserialize<CodeGeneratorRequest>(stdin);
+            request = Deserialize<CodeGeneratorRequest>(stdin); //TODO if this request seems to be unused perhaps remove?
         }
+
+        var response = new CodeGeneratorResponse();
 
         FileDescriptorSet descriptorSet = FileDescriptorSet.Parser.ParseFrom(stream);
         var byteStrings = descriptorSet.File.Select(f => f.ToByteString()).ToList();
         var fileDescriptors = FileDescriptor.BuildFromByteStrings(byteStrings);
         //TODO need to confirm if the above method is correct on how to parse fileDescriptorProto to fileDescriptor before passing down to funcs
 
-        var response = new CodeGeneratorResponse();
-        StringBuilder output = new StringBuilder();
-
-        //TODO Implement logic as per
-        var cSharpEventClass = new CSharpEventClass();
-        var idx = 0;
-        var flag = (uint)Flags.GENERATE_STUB; //TODO need to make this dynamic like in the C++
-        foreach (var fileDescriptorProto in request.ProtoFile)
-        {
-            var descriptorMsg = fileDescriptorProto.MessageType[idx];
-            output.AppendLine(cSharpEventClass.Generate(descriptorMsg, flag));
-            idx++;
-        }
-        idx = 0;
-        var csharpContainer = new CSharpContainer();
+        //Based on the C++ example this whole method should only 1 fileDescriptor hence for a list we should probably handle/iterate over it
         foreach (var fileDescriptor in fileDescriptors)
         {
-            output.AppendLine(csharpContainer.Generate(fileDescriptor.Services[idx], flag));
-            idx++;
-        }
+            StringBuilder output = new StringBuilder();
+            //TODO Implement logic as per
+            //GenerateEvent
+            var cSharpEventClass = new CSharpEventClass();
+            var flag = (uint)Flags.GENERATE_STUB; //TODO need to make this dynamic like in the C++
+            foreach (var descriptorMsg in fileDescriptor.MessageTypes)
+            {
+                output.AppendLine(cSharpEventClass.Generate(descriptorMsg, flag));
+            }
+            //GenerateContainer
+            var csharpContainer = new CSharpContainer();
+            foreach (var serviceDescriptor in fileDescriptor.Services)
+            {
+                output.AppendLine(csharpContainer.Generate(serviceDescriptor, flag));
+            }
 
             //TODO Experiment with Roslyn-programmatic code-formatter
-        // var generatedCSCodeNodeRoot = CSharpSyntaxTree
-        //     .ParseText(generatedCSCodeBody)
-        //     .GetRoot();
-        //
-        // generatedCSCodeBody = generatedCSCodeNodeRoot
+            // var generatedCSCodeNodeRoot = CSharpSyntaxTree
+            //     .ParseText(generatedCSCodeBody)
+            //     .GetRoot();
+            //
+            // generatedCSCodeBody = generatedCSCodeNodeRoot
 
-        string generatedCSCodeBody = output.ToString();
-        string outputFileName = GetServicesFilename(fileDescriptors[0]);
+            string generatedCSCodeBody = output.ToString();
+            string outputFileName = GetServicesFilename(fileDescriptor);
 
-        response.File.Add(
-            new CodeGeneratorResponse.Types.File
-            {
-                Name = outputFileName,
-                Content = generatedCSCodeBody
-            }
-        );
+            response.File.Add(
+                new CodeGeneratorResponse.Types.File
+                {
+                    Name = outputFileName,
+                    Content = generatedCSCodeBody
+                }
+            );
+        }
 
         // set result to standard output
         using (var stdout = Console.OpenStandardOutput())
