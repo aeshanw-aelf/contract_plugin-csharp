@@ -38,10 +38,17 @@ private static void Main(string[] args)
 
         // get request from standard input
         CodeGeneratorRequest request;
+        Stream stream;
         using (var stdin = Console.OpenStandardInput())
         {
+            stream = stdin;
             request = Deserialize<CodeGeneratorRequest>(stdin);
         }
+
+        FileDescriptorSet descriptorSet = FileDescriptorSet.Parser.ParseFrom(stream);
+        var byteStrings = descriptorSet.File.Select(f => f.ToByteString()).ToList();
+        var fileDescriptors = FileDescriptor.BuildFromByteStrings(byteStrings);
+        //TODO need to confirm if the above method is correct on how to parse fileDescriptorProto to fileDescriptor before passing down to funcs
 
         var response = new CodeGeneratorResponse();
         StringBuilder output = new StringBuilder();
@@ -57,15 +64,14 @@ private static void Main(string[] args)
             idx++;
         }
         idx = 0;
-        foreach (var fileDescriptorProto in request.ProtoFile)
+        var csharpContainer = new CSharpContainer();
+        foreach (var fileDescriptor in fileDescriptors)
         {
-            FileDescriptor fileDescriptor = (FileDescriptor)fileDescriptorProto; //FIXME need to figure out how to parse fileDescriptorProto to fileDescriptor before passing down to funcs
-            var csharpContainer = new CSharpContainer();
-            output.AppendLine(csharpContainer.Generate(fileDescriptor.Services[idx],flag));
+            output.AppendLine(csharpContainer.Generate(fileDescriptor.Services[idx], flag));
             idx++;
         }
 
-        //TODO Experiment with Roslyn-programmatic code-formatter
+            //TODO Experiment with Roslyn-programmatic code-formatter
         // var generatedCSCodeNodeRoot = CSharpSyntaxTree
         //     .ParseText(generatedCSCodeBody)
         //     .GetRoot();
@@ -73,8 +79,7 @@ private static void Main(string[] args)
         // generatedCSCodeBody = generatedCSCodeNodeRoot
 
         string generatedCSCodeBody = output.ToString();
-        FileDescriptor fileDescriptor = (FileDescriptor)fileDescriptorProto; //FIXME need to figure out how to parse fileDescriptorProto to fileDescriptor before passing down to funcs
-        string outputFileName = GetServicesFilename(fileDescriptor);
+        string outputFileName = GetServicesFilename(fileDescriptors[0]);
 
         response.File.Add(
             new CodeGeneratorResponse.Types.File
