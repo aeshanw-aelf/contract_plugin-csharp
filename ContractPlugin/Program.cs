@@ -3,7 +3,7 @@ using Google.Protobuf;
 using Google.Protobuf.Compiler;
 using Google.Protobuf.Reflection;
 
-namespace contract_plugin_csharp;
+namespace ContractPluginCsharp;
 
 // assume current directory is the output directory, and it contains protoc cli.
 // protoc --plugin=protoc-gen-contract_plugin_csharp --contract_plugin_csharp_out=./ --proto_path=%userprofile%\.nuget\packages\google.protobuf.tools\3.21.1\tools --proto_path=./ chat.proto
@@ -58,14 +58,14 @@ private static void Main(string[] args)
             StringBuilder output = new StringBuilder();
             //TODO Implement logic as per
             //GenerateEvent
-            var cSharpEventClass = new CSharpEventClass();
+            var cSharpEventClass = new ContractEventClassGenerator();
             var flag = (uint)Flags.GENERATE_STUB; //TODO need to make this dynamic like in the C++
             foreach (var descriptorMsg in fileDescriptor.MessageTypes)
             {
                 output.AppendLine(cSharpEventClass.Generate(descriptorMsg, flag));
             }
             //GenerateContainer
-            var csharpContainer = new CSharpContainer();
+            var csharpContainer = new ContractContainerGenerator();
             foreach (var serviceDescriptor in fileDescriptor.Services)
             {
                 output.AppendLine(csharpContainer.Generate(serviceDescriptor, flag));

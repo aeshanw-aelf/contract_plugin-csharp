@@ -1,7 +1,7 @@
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace contract_plugin_csharp;
+namespace ContractPluginCsharp;
 
 // private Services List<ServiceDescriptor>
 internal static class ServiceHelper

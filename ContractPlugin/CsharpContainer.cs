@@ -4,11 +4,15 @@ using Google.Protobuf.Reflection;
 // using Microsoft.CodeAnalysis.CSharp;
 // using static Microsoft.CodeAnalysis.SyntaxNode;
 
-namespace contract_plugin_csharp;
+namespace ContractPluginCsharp;
 
 // Generates the overall "container" for the generated C# contract
-public class CSharpContainer
+public class ContractContainerGenerator: IGenerator<ServiceDescriptor,uint>
 {
+    private ContractCommentsGenerator _contractCommentsGenerator;
+    private ContractBaseClassGenerator _contractBaseClassGenerator;
+
+
     // TODO remove after development
     // This is for debugging purposes only
     private static void DumpCodeRequestTxtToFile(string textToWrite, string filePath)
@@ -66,16 +70,6 @@ public class CSharpContainer
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L612
     public string Generate(ServiceDescriptor serviceDescriptor,uint flags)
     {
-        /*
-        if(!request.IsInitialized())
-        {
-            //TODO return an error insted
-            return new CodeGeneratorResponse();
-        }
-        DumpCodeRequestTxtToFile(request.ToString(),"codeGeneratorRequest.txt");
-        */
-
-        // set as response
         throw new NotImplementedException();
     }
 }

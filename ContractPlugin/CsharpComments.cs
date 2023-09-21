@@ -1,8 +1,8 @@
 using Google.Protobuf.Reflection;
 
-namespace contract_plugin_csharp;
+namespace ContractPluginCsharp;
 
-public class CsharpComments
+public class ContractCommentsGenerator: IGenerator<FileDescriptorProto,bool>
 {
     //TODO Implementation following https://github.com/AElfProject/contract-plugin/blob/master/src/contract_csharp_generator_helpers.h#L37
     public static string Generate(FileDescriptorProto fileDescriptor,bool leading)
