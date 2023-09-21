@@ -26,37 +26,44 @@ public class CSharpContainer
         }
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L349
     private string GenerateStaticMethodField(MethodDescriptor methodDescriptor)
     {
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L484
     private string GenerateStubClass(ServiceDescriptor serviceDescriptor)
     {
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L514
     private string GenerateReferenceClass(ServiceDescriptor serviceDescriptor, uint flags)
     {
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L386
     private string GenerateAllServiceDescriptorsProperty(ServiceDescriptor serviceDescriptor)
     {
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L332
     private string GenerateMarshallerFields(ServiceDescriptor serviceDescriptor)
     {
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L106
     private string GenerateDocCommentBody(SourceCodeInfo sourceCodeInfo)
     {
         // request.ProtoFile[0].SourceCodeInfo.Location[0] this object can be extracted from CodeGeneratorRequest
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L612
     public string Generate(ServiceDescriptor serviceDescriptor,uint flags)
     {
         /*
@@ -67,9 +74,8 @@ public class CSharpContainer
         }
         DumpCodeRequestTxtToFile(request.ToString(),"codeGeneratorRequest.txt");
         */
-        //TODO Implement
 
         // set as response
-        return "";
+        throw new NotImplementedException();
     }
 }

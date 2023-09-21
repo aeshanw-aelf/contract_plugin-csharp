@@ -4,10 +4,10 @@ namespace contract_plugin_csharp;
 
 public class CSharpEventClass
 {
-    //TODO Implement
+    //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L546
     public string Generate(MessageDescriptor descriptor, uint flags)
     {
         // descriptor.Fields[0].ContainingType.Name;
-        return "";
+        throw new NotImplementedException();
     }
 }

@@ -18,25 +18,26 @@ internal static class ServiceHelper
         return service.GetOptions().GetExtension(ext).ToString();
     }
 
+    //TODO Implementation following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L60
     public static string GenerateDocCommentBody(ServiceDescriptor service)
     {
-        //TODO Implementation
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implementation https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L251
     public static string GetAccessLevel(char flags)
     {
-        //TODO Implementation
-        return "";
+        throw new NotImplementedException();
     }
 
+    //TODO Implement https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L115
     public static string GetServiceContainerClassName(ServiceDescriptor service)
     {
         //TODO service null check
         return $"{service.Name}Container";
     }
 
-    //TODO Implement
+    //TODO Implement https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L204
     // public static List<ServiceDescriptor> GetFullService(ServiceDescriptor service){
     //     List<ServiceDescriptor> allDependedServices = new List<ServiceDescriptor>();
     //     SortedSet<int> seen;
@@ -58,7 +59,7 @@ internal static class ServiceHelper
     //     return result;
     // }
 
-    //TODO Implement
+    //TODO Implement https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L222
     // public Methods GetFullMethod(ServiceDescriptor service){
     //     List<ServiceDescriptor> services = GetFullService(service);
     //     Methods methods;
