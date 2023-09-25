@@ -2,6 +2,7 @@ using System.Text;
 using Google.Protobuf;
 using Google.Protobuf.Compiler;
 using Google.Protobuf.Reflection;
+using ContractGeneratorLibrary;
 
 namespace ContractPluginCsharp;
 

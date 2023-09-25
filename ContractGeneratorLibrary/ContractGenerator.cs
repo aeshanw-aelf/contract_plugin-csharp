@@ -3,7 +3,7 @@ using Google.Protobuf;
 using Google.Protobuf.Compiler;
 using Google.Protobuf.Reflection;
 
-namespace ContractPluginCsharp;
+namespace ContractGeneratorLibrary;
 
 internal enum Flags : uint
 {
@@ -23,12 +23,28 @@ public class ContractGenerator
         return "";
     }
 
+    /// <summary>
+    /// Generate will produce a chunk of C# code that covers the top-level comments of the generate code.
+    /// </summary>
+    //TODO Implementation following https://github.com/AElfProject/contract-plugin/blob/master/src/contract_csharp_generator_helpers.h#L37
+    private string GenerateContractComments(FileDescriptorProto fileDescriptor,bool leading)
+    {
+        //can extract SourceLocation info from fileDescriptor.SourceCodeInfo.Location[0]
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// GetServicesFilename generates Services FileName based on the FileDescriptor
+    /// </summary>
     private static string GetServicesFilename(FileDescriptor fileDescriptor)
     {
         //TODO Implementation
         return "";
     }
 
+    /// <summary>
+    /// Generate will return a output stream including the complete set of C# files for the Contract project. This is the primary entry-point into the ContractPlugin.
+    /// </summary>
     public CodeGeneratorResponse Generate(Stream stdin)
     {
         // get request from standard input

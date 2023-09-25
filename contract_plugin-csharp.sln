@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractGeneratorLibrary", "ContractGeneratorLibrary\ContractGeneratorLibrary.csproj", "{AEC22CE5-F118-414C-A962-D1BAA026FA98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractPlugin", "ContractPlugin\ContractPlugin.csproj", "{655FE90D-C606-404F-B7B3-F3DD2C3C9452}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEC22CE5-F118-414C-A962-D1BAA026FA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC22CE5-F118-414C-A962-D1BAA026FA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC22CE5-F118-414C-A962-D1BAA026FA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC22CE5-F118-414C-A962-D1BAA026FA98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655FE90D-C606-404F-B7B3-F3DD2C3C9452}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655FE90D-C606-404F-B7B3-F3DD2C3C9452}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655FE90D-C606-404F-B7B3-F3DD2C3C9452}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655FE90D-C606-404F-B7B3-F3DD2C3C9452}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
