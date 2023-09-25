@@ -18,15 +18,6 @@ internal enum Flags : uint
 public class ContractGenerator
 {
     /// <summary>
-    /// Extract the C# Namespace for the target contract based on the Proto data.
-    /// </summary>
-    //TODO Implementation https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/names.cc#L66
-    private static string GetFileNamespace(FileDescriptor fileDescriptor)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
     /// Generate will produce a chunk of C# code that covers the top-level comments of the generate code.
     /// </summary>
     //TODO Implementation following https://github.com/AElfProject/contract-plugin/blob/master/src/contract_csharp_generator_helpers.h#L37
