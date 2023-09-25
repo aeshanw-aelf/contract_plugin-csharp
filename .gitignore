@@ -1,3 +1,5 @@
 .idea/
 ContractPlugin/bin/
 ContractPlugin/obj/
+ContractGeneratorLibrary/bin/
+ContractGeneratorLibrary/obj/

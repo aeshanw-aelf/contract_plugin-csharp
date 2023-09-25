@@ -52,19 +52,19 @@ public class ContractContainerGenerator
     }
 
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L514
-    private string GenerateReferenceClass(ServiceDescriptor serviceDescriptor, uint flags)
+    private static string GenerateReferenceClass(ServiceDescriptor serviceDescriptor, uint flags)
     {
         throw new NotImplementedException();
     }
 
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L386
-    private string GenerateAllServiceDescriptorsProperty(ServiceDescriptor serviceDescriptor)
+    private static string GenerateAllServiceDescriptorsProperty(ServiceDescriptor serviceDescriptor)
     {
         throw new NotImplementedException();
     }
 
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L332
-    private string GenerateMarshallerFields(ServiceDescriptor serviceDescriptor)
+    private static string GenerateMarshallerFields(ServiceDescriptor serviceDescriptor)
     {
         throw new NotImplementedException();
     }
@@ -73,7 +73,7 @@ public class ContractContainerGenerator
     /// Generates the header comments for the C# Container of the AElf Contract.
     /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L106
-    private string GenerateDocCommentBody(SourceCodeInfo sourceCodeInfo)
+    private static string GenerateDocCommentBody(SourceCodeInfo sourceCodeInfo)
     {
         // request.ProtoFile[0].SourceCodeInfo.Location[0] this object can be extracted from CodeGeneratorRequest
         throw new NotImplementedException();
