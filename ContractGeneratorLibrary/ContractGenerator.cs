@@ -17,10 +17,13 @@ internal enum Flags : uint
 //This is the main entry-point into this project and is exposed to external users
 public class ContractGenerator
 {
-    private static string GetFileNamespace(FileDescriptorProto fileDescriptor)
+    /// <summary>
+    /// Extract the C# Namespace for the target contract based on the Proto data.
+    /// </summary>
+    //TODO Implementation https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/names.cc#L66
+    private static string GetFileNamespace(FileDescriptor fileDescriptor)
     {
-        //TODO Implementation
-        return "";
+        throw new NotImplementedException();
     }
 
     /// <summary>
