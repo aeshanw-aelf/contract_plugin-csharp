@@ -50,19 +50,28 @@ public class ContractContainerGenerator
     {
         throw new NotImplementedException();
     }
-
+    
+    /// <summary>
+    /// Generates the Class for the ReferenceState as part of the aelf contract
+    /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L514
     private static string GenerateReferenceClass(ServiceDescriptor serviceDescriptor, uint flags)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Generates the IReadOnlyList of ServiceDescriptors as part of the contract
+    /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L386
     private static string GenerateAllServiceDescriptorsProperty(ServiceDescriptor serviceDescriptor)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Generates a section of instantiated aelf Marshallers as part of the contract
+    /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L332
     private static string GenerateMarshallerFields(ServiceDescriptor serviceDescriptor)
     {
