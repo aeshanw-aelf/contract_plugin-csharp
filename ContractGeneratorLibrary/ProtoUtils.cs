@@ -10,10 +10,6 @@ public class ProtoUtils
         return ToCSharpName(descriptor.FullName, descriptor.File);
     }
 
-    // public string GetAccessLevel(uint flags) {
-    //     return flags & Flags.INTERNAL_ACCESS ? "internal" : "public";
-    // }
-
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor){
         string result = GetFileNamespace(fileDescriptor);
         if (!string.IsNullOrEmpty(result))
