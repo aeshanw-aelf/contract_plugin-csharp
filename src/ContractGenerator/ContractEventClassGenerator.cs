@@ -1,8 +1,6 @@
-using Google.Protobuf;
 using Google.Protobuf.Reflection;
-using Google.Protobuf.Compiler;
 
-namespace ContractGeneratorLibrary;
+namespace ContractGenerator;
 
 public class ContractEventClassGenerator
 {
@@ -10,7 +8,7 @@ public class ContractEventClassGenerator
     /// Generate will produce a chunk of C# code that serves as the Event class of the AElf Contract. Events are used internally to represent events that have happened during the execution of a smart contract.
     /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L546
-    public string Generate(MessageDescriptor descriptor, byte flags)
+    public static string Generate(MessageDescriptor descriptor, byte flags)
     {
         // descriptor.Fields[0].ContainingType.Name;
         throw new NotImplementedException();
@@ -19,14 +17,14 @@ public class ContractEventClassGenerator
     /// <summary>
     /// Determines if the proto-message is of EventType based on Aelf.options
     /// </summary>
-    public bool IsEventMessageType(MessageDescriptor message){
+    public static bool IsEventMessageType(MessageDescriptor message){
         return message.GetOptions().GetExtension(AElf.OptionsExtensions.IsEvent);
     }
 
     /// <summary>
     /// Determines if the proto-message is of IndexedType based on Aelf.options
     /// </summary>
-    public bool IsIndexedField(FieldDescriptor field)
+    public static bool IsIndexedField(FieldDescriptor field)
     {
         return field.GetOptions().GetExtension(AElf.OptionsExtensions.IsIndexed);
     }
@@ -34,7 +32,7 @@ public class ContractEventClassGenerator
     /// <summary>
     /// Determines if the proto-message is of ViewType based on Aelf.options
     /// </summary>
-    public bool IsViewOnlyMethod(MethodDescriptor method)
+    public static bool IsViewOnlyMethod(MethodDescriptor method)
     {
         return method.GetOptions().GetExtension(AElf.OptionsExtensions.IsView);
     }
@@ -43,7 +41,7 @@ public class ContractEventClassGenerator
     /// Counts the size of the ServiceBase type of the proto-message based on Aelf.options.
     /// replaces the C++ method https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L148
     /// </summary>
-    public int GetServiceBaseCount(ServiceDescriptor service)
+    public static int GetServiceBaseCount(ServiceDescriptor service)
     {
         return service.GetOptions().GetExtension(AElf.OptionsExtensions.Base).Count;
     }
@@ -52,7 +50,7 @@ public class ContractEventClassGenerator
     /// GetServiceBase returns ServiceBase type at a particular index of the proto-message based on Aelf.options.
     /// replaces the C++ method https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L152C1-L154C2
     /// </summary>
-    public string GetServiceBase(ServiceDescriptor service, int index)
+    public static string GetServiceBase(ServiceDescriptor service, int index)
     {
         //TODO maybe throw exception for -ve index
         return service.GetOptions().GetExtension(AElf.OptionsExtensions.Base)[index];

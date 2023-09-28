@@ -1,5 +1,4 @@
 using System.Text;
-using ContractGeneratorLibrary;
 using Google.Protobuf.Compiler;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
@@ -33,6 +32,7 @@ public class ContractGenerator
     /// <summary>
     /// Generates a set of C# files from the input stream containing the proto source. This is the primary entry-point into the ContractPlugin.
     /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
     public CodeGeneratorResponse Generate(Stream stdin)
     {
         // get request from standard input
@@ -53,14 +53,14 @@ public class ContractGenerator
         //Based on the C++ example this whole method should only 1 fileDescriptor hence for a list we should probably handle/iterate over it
         foreach (var fileDescriptor in fileDescriptors)
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
             //TODO Implement logic as per
             //GenerateEvent
             var cSharpEventClass = new ContractEventClassGenerator();
-            var flag = FlagConstants.GenerateStub; //TODO need to make this dynamic like in the C++
+            const byte flag = FlagConstants.GenerateStub; //TODO need to make this dynamic like in the C++
             foreach (var descriptorMsg in fileDescriptor.MessageTypes)
             {
-                output.AppendLine(cSharpEventClass.Generate(descriptorMsg, flag));
+                output.AppendLine(ContractEventClassGenerator.Generate(descriptorMsg, flag));
             }
             //GenerateContainer
             var csharpContainer = new ContractContainerGenerator();
@@ -76,7 +76,7 @@ public class ContractGenerator
             //
             // generatedCSCodeBody = generatedCSCodeNodeRoot
 
-            var generatedCsCodeBody = output.ToString() ?? throw new ArgumentNullException("output.ToString()");
+            var generatedCsCodeBody = output.ToString();
             var outputFileName = GetServicesFilename(fileDescriptor);
 
             response.File.Add(

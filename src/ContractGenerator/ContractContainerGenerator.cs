@@ -1,11 +1,9 @@
-using Google.Protobuf.Compiler;
 using Google.Protobuf.Reflection;
-using Google.Protobuf;
 
 // using Microsoft.CodeAnalysis.CSharp;
 // using static Microsoft.CodeAnalysis.SyntaxNode;
 
-namespace ContractGeneratorLibrary;
+namespace ContractGenerator;
 
 // Generates the overall "container" for the generated C# contract
 public class ContractContainerGenerator
@@ -50,7 +48,7 @@ public class ContractContainerGenerator
     {
         throw new NotImplementedException();
     }
-    
+
     /// <summary>
     /// Generates the Class for the ReferenceState as part of the aelf contract
     /// </summary>
@@ -87,7 +85,7 @@ public class ContractContainerGenerator
         // request.ProtoFile[0].SourceCodeInfo.Location[0] this object can be extracted from CodeGeneratorRequest
         throw new NotImplementedException();
     }
-    
+
     private static string GetServerClassName(ServiceDescriptor service)
     {
         return service.Name + "Base";

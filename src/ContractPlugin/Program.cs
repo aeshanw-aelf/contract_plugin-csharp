@@ -1,5 +1,4 @@
 using Google.Protobuf;
-using Google.Protobuf.Compiler;
 
 namespace ContractPlugin;
 
@@ -13,10 +12,10 @@ internal class Program
         // you can attach debugger
         // System.Diagnostics.Debugger.Launch();
 
-        Stream stream = Console.OpenStandardInput();
+        var stream = Console.OpenStandardInput();
 
-        ContractGenerator.ContractGenerator contractGenerator = new ContractGenerator.ContractGenerator();
-        CodeGeneratorResponse response = contractGenerator.Generate(stream);
+        var contractGenerator = new ContractGenerator.ContractGenerator();
+        var response = contractGenerator.Generate(stream);
 
         // set result to standard output
         using var stdout = Console.OpenStandardOutput();
