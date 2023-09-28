@@ -153,7 +153,7 @@ public class ContractContainerGenerator
     /// Generate will produce a chunk of C# code that serves as the container class of the AElf Contract.
     /// </summary>
     //TODO Implement following https://github.com/AElfProject/contract-plugin/blob/453bebfec0dd2fdcc06d86037055c80721d24e8a/src/contract_csharp_generator.cc#L612
-    public string Generate(ServiceDescriptor serviceDescriptor,byte flags)
+    public string Generate(ServiceDescriptor serviceDescriptor, byte flags)
     {
         throw new NotImplementedException();
     }

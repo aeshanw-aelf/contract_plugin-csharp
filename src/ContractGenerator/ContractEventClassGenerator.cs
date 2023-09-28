@@ -17,7 +17,8 @@ public class ContractEventClassGenerator
     /// <summary>
     /// Determines if the proto-message is of EventType based on Aelf.options
     /// </summary>
-    public static bool IsEventMessageType(MessageDescriptor message){
+    public static bool IsEventMessageType(MessageDescriptor message)
+    {
         return message.GetOptions().GetExtension(AElf.OptionsExtensions.IsEvent);
     }
 
