@@ -14,6 +14,73 @@ public class ProtoUtils
     //     return flags & Flags.INTERNAL_ACCESS ? "internal" : "public";
     // }
 
+    /// <summary>
+    ///     This Util GetCsharpComments gets/generates C# comments based on the proto. Copied from the C++ original
+    ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
+    /// </summary>
+    public static string GetCsharpComments<TDescriptor>(TDescriptor desc, bool leading)
+    {
+        return GetPrefixedComments(desc, leading, "//");
+    }
+
+    /// <summary>
+    ///     This Util gets the GetPrefixedComments based on the proto. Copied from the C++ original
+    ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
+    /// </summary>
+    private static string GetPrefixedComments<TDescriptor>(TDescriptor desc, bool leading, string prefix)
+    {
+        List<string> outComments = new List<string>();
+
+        if (leading)
+        {
+            GetComment(desc, COMMENTTYPE.LeadingDetached, outComments);
+            List<string> leadingComments = new List<string>();
+            GetComment(desc, COMMENTTYPE.Leading, leadingComments);
+            outComments.AddRange(leadingComments);
+        }
+        else
+        {
+            GetComment(desc, COMMENTTYPE.Trailing, outComments);
+        }
+
+        return GenerateCommentsWithPrefix(outComments, prefix);
+    }
+
+    public enum CommentType
+    {
+        Leading,
+        Trailing,
+        LeadingDetached
+    }
+
+    private static void GetComment<TDescriptor>(TDescriptor desc, CommentType type, List<string> outComments)
+    {
+        SourceLocation location = new SourceLocation();
+        if (!GetSourceLocation(desc, location))
+        {
+            return;
+        }
+
+        if (type == CommentType.Leading || type == CommentType.Trailing)
+        {
+            string comments = type == CommentType.Leading ? location.leading_comments : location.trailing_comments;
+            Split(comments, '\n', outComments);
+        }
+        else if (type == CommentType.LeadingDetached)
+        {
+            foreach (string detachedComment in location.leading_detached_comments)
+            {
+                Split(detachedComment, '\n', outComments);
+                outComments.Add(""); // Add an empty line separator
+            }
+        }
+        else
+        {
+            Console.WriteLine("Unknown comment type " + type);
+            Environment.Exit(1);
+        }
+    }
+
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor)
     {
         var result = GetFileNamespace(fileDescriptor);
