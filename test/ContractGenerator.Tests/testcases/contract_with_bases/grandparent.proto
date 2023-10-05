@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "aelf/options.proto";
+import "google/protobuf/empty.proto";
+
+service GrandParent {
+    option (aelf.base) = "grandparent.proto";
+    rpc GrandParentMethod (google.protobuf.Empty) returns (google.protobuf.Empty);
+}

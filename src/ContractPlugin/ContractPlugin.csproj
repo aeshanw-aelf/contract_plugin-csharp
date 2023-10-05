@@ -12,26 +12,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Google.Protobuf" Version="3.24.3" />
+        <PackageReference Include="Google.Protobuf" Version="3.24.3"/>
         <!-- TODO This needs to be a nuget pkg eventually -->
-        <ProjectReference Include="..\ContractGenerator\ContractGenerator.csproj" />
+        <ProjectReference Include="..\ContractGenerator\ContractGenerator.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="obj\**" />
+        <Compile Remove="obj\**"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="obj\**" />
+        <EmbeddedResource Remove="obj\**"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="obj\**" />
+        <None Remove="obj\**"/>
     </ItemGroup>
 
     <!-- Define a default build target -->
-<!--    <Target Name="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true'">-->
-<!--        <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore;Build" Properties="Configuration=$(Configuration)"/>-->
-<!--    </Target>-->
+    <!--    <Target Name="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true'">-->
+    <!--        <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore;Build" Properties="Configuration=$(Configuration)"/>-->
+    <!--    </Target>-->
 
 </Project>

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "aelf/options.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "parent.proto";
+option csharp_namespace = "BaseExample";
+
+service ContractWithBases {
+    option (aelf.csharp_state) = "DummyState";
+    option (aelf.base) = "parent.proto";
+    rpc Update (google.protobuf.StringValue) returns (google.protobuf.Empty);
+}

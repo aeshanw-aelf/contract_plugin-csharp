@@ -31,8 +31,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\ContractGenerator\ContractGenerator.csproj"/>
     </ItemGroup>
-
-
     <ItemGroup>
         <Folder Include="testcases\_common\"/>
     </ItemGroup>
