@@ -1,9 +1,17 @@
+using System.Text;
 using Google.Protobuf.Reflection;
 
 namespace ContractGenerator;
 
 public class ProtoUtils
 {
+    public enum CommentType
+    {
+        Leading,
+        Trailing,
+        LeadingDetached
+    }
+
     //TODO Implement https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/names.cc#L73
     public static string GetClassName(IDescriptor descriptor)
     {
@@ -20,7 +28,7 @@ public class ProtoUtils
     ///     This Util GetCsharpComments gets/generates C# comments based on the proto. Copied from the C++ original
     ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
     /// </summary>
-    public static string GetCsharpComments<TDescriptor>(TDescriptor desc, bool leading)
+    public static string GetCsharpComments(IDescriptor desc, bool leading)
     {
         return GetPrefixedComments(desc, leading, "//");
     }
@@ -29,58 +37,73 @@ public class ProtoUtils
     ///     This Util gets the GetPrefixedComments based on the proto. Copied from the C++ original
     ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
     /// </summary>
-    private static string GetPrefixedComments<TDescriptor>(TDescriptor desc, bool leading, string prefix)
+    private static string GetPrefixedComments(IDescriptor desc, bool leading, string prefix)
     {
-        List<string> outComments = new List<string>();
+        var outComments = new List<string?>();
 
         if (leading)
         {
-            GetComment(desc, COMMENTTYPE.LeadingDetached, outComments);
-            List<string> leadingComments = new List<string>();
-            GetComment(desc, COMMENTTYPE.Leading, leadingComments);
+            GetComment(desc, CommentType.LeadingDetached, outComments);
+            var leadingComments = new List<string?>();
+            GetComment(desc, CommentType.Leading, leadingComments);
             outComments.AddRange(leadingComments);
         }
         else
         {
-            GetComment(desc, COMMENTTYPE.Trailing, outComments);
+            GetComment(desc, CommentType.Trailing, outComments);
         }
 
         return GenerateCommentsWithPrefix(outComments, prefix);
     }
 
-    public enum CommentType
+    private static string GenerateCommentsWithPrefix(List<string?> input, string prefix)
     {
-        Leading,
-        Trailing,
-        LeadingDetached
+        var sb = new StringBuilder();
+        foreach (var elem in input)
+            if (string.IsNullOrEmpty(elem))
+                sb.Append(prefix).Append("\n");
+            else if (elem[0] == ' ')
+                sb.Append(prefix).Append(elem).Append("\n");
+            else
+                sb.Append(prefix).Append(" ").Append(elem).Append("\n");
+        return sb.ToString();
     }
 
-    private static void GetComment<TDescriptor>(TDescriptor desc, CommentType type, List<string> outComments)
+    private static void GetComment(IDescriptor desc, CommentType type, ICollection<string?> outComments)
     {
-        SourceLocation location = new SourceLocation();
-        if (!GetSourceLocation(desc, location))
-        {
-            return;
-        }
+        if (desc.File.ToProto().SourceCodeInfo == null) return;
 
-        if (type == CommentType.Leading || type == CommentType.Trailing)
-        {
-            string comments = type == CommentType.Leading ? location.leading_comments : location.trailing_comments;
-            Split(comments, '\n', outComments);
-        }
-        else if (type == CommentType.LeadingDetached)
-        {
-            foreach (string detachedComment in location.leading_detached_comments)
+        var locations = desc.File.ToProto().SourceCodeInfo.Location;
+
+        foreach (var location in locations)
+            switch (type)
             {
-                Split(detachedComment, '\n', outComments);
-                outComments.Add(""); // Add an empty line separator
+                case CommentType.Leading:
+                case CommentType.Trailing:
+                {
+                    var comments = type == CommentType.Leading ? location.LeadingComments : location.TrailingComments;
+                    Split(comments, '\n', outComments);
+                    break;
+                }
+                case CommentType.LeadingDetached:
+                {
+                    foreach (var detachedComment in location.LeadingDetachedComments)
+                    {
+                        Split(detachedComment, '\n', outComments);
+                        outComments.Add(""); // Add an empty line separator
+                    }
+
+                    break;
+                }
+                default:
+                    throw new Exception("Unknown comment type " + type);
             }
-        }
-        else
-        {
-            Console.WriteLine("Unknown comment type " + type);
-            Environment.Exit(1);
-        }
+    }
+
+    private static void Split(string s, char delim, ICollection<string?> appendTo)
+    {
+        var reader = new StringReader(s);
+        while (reader.ReadLine() is { } line) appendTo.Add(line);
     }
 
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor)
