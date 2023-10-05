@@ -5,7 +5,7 @@ namespace ContractGenerator;
 
 public class ProtoUtils
 {
-    public enum CommentType
+    private enum CommentType
     {
         Leading,
         Trailing,
@@ -100,10 +100,13 @@ public class ProtoUtils
             }
     }
 
-    private static void Split(string s, char delim, ICollection<string?> appendTo)
+    private static void Split(string input, char delim, ICollection<string?> appendTo)
     {
-        var reader = new StringReader(s);
-        while (reader.ReadLine() is { } line) appendTo.Add(line);
+        var substrings = input.Split(delim);
+        foreach (var substring in substrings)
+        {
+            appendTo.Add(substring);
+        }
     }
 
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor)

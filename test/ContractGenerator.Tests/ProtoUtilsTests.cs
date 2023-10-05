@@ -78,14 +78,43 @@ public class ProtoUtilsTests
 
         // Act: Call the GetClassName method
         var comments = ProtoUtils.GetCsharpComments(file, true);
-        const string expectedComments = @"// These are test header comments!
+        const string expectedComments = @"//
+//
+// These are test header comments!
+//
+//
+//
+//
 // The namespace of this class
+//
+//
+//
+//
 // The name of the state class the smart contract is going to use to access blockchain state
+//
 // Actions (methods that modify contract state)
 // Stores the value in contract state
+//
+//
+//
+//
 // Views (methods that don't modify contract state)
 // Get the value stored from contract state
+//
+//
+//
+//
+//
+//
 // An event that will be emitted from contract method call
+//
+//
+//
+//
+//
+//
+//
+//
 ";
 
 
