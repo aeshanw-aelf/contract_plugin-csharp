@@ -5,13 +5,6 @@ namespace ContractGenerator;
 
 public class ProtoUtils
 {
-    private enum CommentType
-    {
-        Leading,
-        Trailing,
-        LeadingDetached
-    }
-
     //TODO Implement https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/names.cc#L73
     public static string GetClassName(IDescriptor descriptor)
     {
@@ -103,10 +96,7 @@ public class ProtoUtils
     private static void Split(string input, char delim, ICollection<string?> appendTo)
     {
         var substrings = input.Split(delim);
-        foreach (var substring in substrings)
-        {
-            appendTo.Add(substring);
-        }
+        foreach (var substring in substrings) appendTo.Add(substring);
     }
 
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor)
@@ -249,5 +239,12 @@ public class ProtoUtils
             // Concatenate a _ at the beginning
             result = '_' + result;
         return result;
+    }
+
+    private enum CommentType
+    {
+        Leading,
+        Trailing,
+        LeadingDetached
     }
 }
