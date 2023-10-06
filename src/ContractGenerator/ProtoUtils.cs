@@ -19,7 +19,7 @@ public class ProtoUtils
 
     /// <summary>
     ///     This Util GetCsharpComments gets/generates C# comments based on the proto. Copied from the C++ original
-    ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
+    ///     https://github.com/AElfProject/contract-plugin/blob/de625fcb79f83603e29d201c8488f101b40f573c/src/contract_csharp_generator_helpers.h#L37
     /// </summary>
     public static string GetCsharpComments(IDescriptor desc, bool leading)
     {
@@ -28,7 +28,7 @@ public class ProtoUtils
 
     /// <summary>
     ///     This Util gets the GetPrefixedComments based on the proto. Copied from the C++ original
-    ///     https://github.com/protocolbuffers/protobuf/blob/e57166b65a6d1d55fc7b18beaae000565f617f22/src/google/protobuf/compiler/csharp/csharp_helpers.cc#L255C35-L255C50
+    ///     https://github.com/AElfProject/contract-plugin/blob/de625fcb79f83603e29d201c8488f101b40f573c/src/generator_helpers.h#L257
     /// </summary>
     private static string GetPrefixedComments(IDescriptor desc, bool leading, string prefix)
     {
