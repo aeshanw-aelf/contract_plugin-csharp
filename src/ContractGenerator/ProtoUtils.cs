@@ -49,16 +49,15 @@ public class ProtoUtils
         return GenerateCommentsWithPrefix(outComments, prefix);
     }
 
-    private static string GenerateCommentsWithPrefix(List<string?> input, string prefix)
+    private static string GenerateCommentsWithPrefix(IEnumerable<string?> input, string prefix)
     {
         var sb = new StringBuilder();
-        foreach (var elem in input)
-            if (string.IsNullOrEmpty(elem))
-                sb.Append(prefix).Append("\n");
-            else if (elem[0] == ' ')
+        foreach (var elem in input.Where(elem => !string.IsNullOrEmpty(elem)))
+            if (elem != null && elem[0] == ' ')
                 sb.Append(prefix).Append(elem).Append("\n");
             else
                 sb.Append(prefix).Append(" ").Append(elem).Append("\n");
+
         return sb.ToString();
     }
 
@@ -81,10 +80,7 @@ public class ProtoUtils
                 case CommentType.LeadingDetached:
                 {
                     foreach (var detachedComment in location.LeadingDetachedComments)
-                    {
                         Split(detachedComment, '\n', outComments);
-                        outComments.Add(""); // Add an empty line separator
-                    }
 
                     break;
                 }
