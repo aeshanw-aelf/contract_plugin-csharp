@@ -68,6 +68,32 @@ public class ProtoUtilsTests
     }
 
     [Fact]
+    public void GetCsharpComments_ReturnsComments()
+    {
+        // Arrange: Create a DescriptorBase with a known FullName and File
+        var fds = GetFileDescriptorSet("helloworld");
+        var byteStrings = fds.File.Select(f => f.ToByteString());
+        var fileDescriptors = FileDescriptor.BuildFromByteStrings(byteStrings, _extensionRegistry);
+        var file = fileDescriptors[^1];
+
+        // Act: Call the GetClassName method
+        var comments = ProtoUtils.GetCsharpComments(file, true);
+        const string expectedComments = @"// These are test header comments!
+// The namespace of this class
+// The name of the state class the smart contract is going to use to access blockchain state
+// Actions (methods that modify contract state)
+// Stores the value in contract state
+// Views (methods that don't modify contract state)
+// Get the value stored from contract state
+// An event that will be emitted from contract method call
+";
+
+
+        // Assert: Verify the expected result
+        Assert.Equal(expectedComments, comments);
+    }
+
+    [Fact]
     public void GetPropertyName_ReturnsCorrectPropertyName()
     {
         // Arrange: Create a DescriptorBase with a known FullName and File

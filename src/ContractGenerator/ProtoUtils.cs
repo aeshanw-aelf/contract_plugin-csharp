@@ -1,3 +1,4 @@
+using System.Text;
 using Google.Protobuf.Reflection;
 
 namespace ContractGenerator;
@@ -44,6 +45,84 @@ public class ProtoUtils
     public static string GetAccessLevel(byte flags)
     {
         return (flags & FlagConstants.InternalAccess) != 0 ? "internal" : "public";
+    }
+
+    /// <summary>
+    ///     This Util GetCsharpComments gets/generates C# comments based on the proto. Copied from the C++ original
+    ///     https://github.com/AElfProject/contract-plugin/blob/de625fcb79f83603e29d201c8488f101b40f573c/src/contract_csharp_generator_helpers.h#L37
+    /// </summary>
+    public static string GetCsharpComments(IDescriptor desc, bool leading)
+    {
+        return GetPrefixedComments(desc, leading, "//");
+    }
+
+    /// <summary>
+    ///     This Util gets the GetPrefixedComments based on the proto. Copied from the C++ original
+    ///     https://github.com/AElfProject/contract-plugin/blob/de625fcb79f83603e29d201c8488f101b40f573c/src/generator_helpers.h#L257
+    /// </summary>
+    private static string GetPrefixedComments(IDescriptor desc, bool leading, string prefix)
+    {
+        var outComments = new List<string?>();
+
+        if (leading)
+        {
+            GetComment(desc, CommentType.LeadingDetached, outComments);
+            var leadingComments = new List<string?>();
+            GetComment(desc, CommentType.Leading, leadingComments);
+            outComments.AddRange(leadingComments);
+        }
+        else
+        {
+            GetComment(desc, CommentType.Trailing, outComments);
+        }
+
+        return GenerateCommentsWithPrefix(outComments, prefix);
+    }
+
+    private static string GenerateCommentsWithPrefix(IEnumerable<string?> input, string prefix)
+    {
+        var sb = new StringBuilder();
+        foreach (var elem in input.Where(elem => !string.IsNullOrEmpty(elem)))
+            if (elem != null && elem[0] == ' ')
+                sb.Append(prefix).Append(elem).Append("\n");
+            else
+                sb.Append(prefix).Append(" ").Append(elem).Append("\n");
+
+        return sb.ToString();
+    }
+
+    private static void GetComment(IDescriptor desc, CommentType type, ICollection<string?> outComments)
+    {
+        if (desc.File.ToProto().SourceCodeInfo == null) return;
+
+        var locations = desc.File.ToProto().SourceCodeInfo.Location;
+
+        foreach (var location in locations)
+            switch (type)
+            {
+                case CommentType.Leading:
+                case CommentType.Trailing:
+                {
+                    var comments = type == CommentType.Leading ? location.LeadingComments : location.TrailingComments;
+                    Split(comments, '\n', outComments);
+                    break;
+                }
+                case CommentType.LeadingDetached:
+                {
+                    foreach (var detachedComment in location.LeadingDetachedComments)
+                        Split(detachedComment, '\n', outComments);
+
+                    break;
+                }
+                default:
+                    throw new Exception("Unknown comment type " + type);
+            }
+    }
+
+    private static void Split(string input, char delim, ICollection<string?> appendTo)
+    {
+        var substrings = input.Split(delim);
+        foreach (var substring in substrings) appendTo.Add(substring);
     }
 
     private static string ToCSharpName(string name, FileDescriptor fileDescriptor)
@@ -186,5 +265,12 @@ public class ProtoUtils
             // Concatenate a _ at the beginning
             result = '_' + result;
         return result;
+    }
+
+    private enum CommentType
+    {
+        Leading,
+        Trailing,
+        LeadingDetached
     }
 }
